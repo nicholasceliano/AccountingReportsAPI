@@ -1,0 +1,21 @@
+{
+	"name": "accountingreportsapi",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.ts",
+	"scripts": {
+		"start": "node build/app.js",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"tsc": "tsc"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@types/express": "^4.16.1",
+		"@types/node": "^11.13.6",
+		"express": "^4.16.4"
+	},
+	"devDependencies": {
+		"typescript": "^3.4.4"
+	}
+}
