@@ -1,3 +1,7 @@
 /node_modules
 /build
+/logs
 credentials.json
+config.dev.ts
+config.prod.ts
+config.ts

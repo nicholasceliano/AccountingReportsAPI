@@ -1,4 +1,4 @@
-import { APICredentials } from "../models/apiCredentials";
+import { APICredentials } from '../models/apiCredentials';
 
 export {}; // force file to be loaded as module
 

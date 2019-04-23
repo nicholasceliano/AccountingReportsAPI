@@ -1,8 +1,9 @@
 import express = require('express');
 import { config } from './config';
 import { MiddlewareHelper } from './helpers/MiddlewareHelper';
+import { Logger } from 'winston';
 
-module.exports = (app: express.Express) => {
+module.exports = (app: express.Express, logger: Logger) => {
 
 	app.use((req, res, next) => {
 
@@ -17,14 +18,14 @@ module.exports = (app: express.Express) => {
 			return res.sendStatus(200);
 		}
 
-		const apiCredentials = new MiddlewareHelper().getAPIKey(req);
+		const apiCredentials = new MiddlewareHelper(logger).getAPIKey(req);
 
 		if (apiCredentials) {
 			req.apiCredentails = apiCredentials;
 		} else {
-			return res.sendStatus(401)
+			return res.sendStatus(401);
 		}
-		
+
 		next();
 	});
 };
