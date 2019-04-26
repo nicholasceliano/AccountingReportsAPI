@@ -9,4 +9,8 @@ export class Accounts extends AccountingSystem {
 	public list() {
 		return this.getAccounts();
 	}
+
+	public history() {
+		return this.getAccounts();
+	}
 }

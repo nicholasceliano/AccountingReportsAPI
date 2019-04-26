@@ -1,3 +1,5 @@
+import { Account } from '../models/account';
+
 export interface AccountSystemBridge {
-	accounts(): Account[];
+	accounts(): Promise<Account[]>;
 }

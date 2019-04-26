@@ -1,3 +1,9 @@
 export type Account = {
-	name: string;
+	value: number;
+	date: Date;
+	currencyId: string;
+	currencyName: string;
+	accountId: string;
+	accountName: string;
+	accountType: string;
 };

@@ -1,18 +1,33 @@
 import { AccountSystemBridge } from '../core/AccountSystemBridge';
-import { DatabaseConnInfo } from '../models/DatabaseConnInfo';
+import { MySQLDatabase } from '../core/database/MySQLDatabase';
+import { Account } from '../models/account';
+import { AccountingSystemDatabase } from '../core/AccountingSystemDatabase';
 
-export class GnuCashImp implements AccountSystemBridge {
+export class GnuCashImp extends AccountingSystemDatabase implements AccountSystemBridge {
+	private db: MySQLDatabase;
 
-	constructor(dbConnInfo: DatabaseConnInfo) {
-		const test = '';
+	constructor(db: MySQLDatabase) {
+		super();
+		this.db = db;
 	}
 
-	public accounts() {
-		return [];
-	}
+	public accounts(): Promise<Account[]> {
+		return this.promiseHandler<Account[]>(this.db.storedProc('getAccounts'), (res) => {
+			const array: Account[] = [];
 
-	private database() {
+			res[0].forEach((e) => {
+				array.push({
+					accountType: e.account_type,
+					accountId: e.account_guid,
+					accountName: e.account_name,
+					date: e.value_date,
+					currencyId: e.currency_guid,
+					currencyName: e.currency_name,
+					value: (e.account_currency * e.currency_value),
+				} as Account);
+			});
 
-		return '';
+			return array;
+		});
 	}
 }

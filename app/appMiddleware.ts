@@ -1,7 +1,8 @@
 import express = require('express');
 import { config } from './config';
-import { MiddlewareHelper } from './helpers/MiddlewareHelper';
 import { Logger } from 'winston';
+import { ExpressRequest } from './extensions/ExpressRequest';
+import { ExpressResponse } from './extensions/ExpressResponse';
 
 module.exports = (app: express.Express, logger: Logger) => {
 
@@ -18,14 +19,17 @@ module.exports = (app: express.Express, logger: Logger) => {
 			return res.sendStatus(200);
 		}
 
-		const apiCredentials = new MiddlewareHelper(logger).getAPIKey(req);
+		new ExpressResponse().setResponseObjects(res);
+
+		const apiCredentials = new ExpressRequest(logger).getAPIKey(req);
 
 		if (apiCredentials) {
 			req.apiCredentails = apiCredentials;
 		} else {
-			return res.sendStatus(401);
+			return res.APIError(401, 'APIKey Invalid or missing');
 		}
 
 		next();
 	});
+
 };

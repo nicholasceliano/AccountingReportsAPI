@@ -8,9 +8,13 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-	const accounts = new Accounts(req.apiCredentails).list();
 
-	res.send(accounts);
+	// params options
+		// type=history
+		// dateInc=week,month,day
+
+	res.sendAPIResponse(new Accounts(req.apiCredentails).list());
+
 });
 
 module.exports = router;
