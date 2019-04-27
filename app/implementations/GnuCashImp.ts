@@ -38,7 +38,7 @@ export class GnuCashImp extends AccountingSystemDatabase implements AccountSyste
 
 			res[0].forEach((e) => {
 				array.push({
-					ct: e.quantity,
+					ct: e.totalQuantity,
 					ctChg: e.quantityChange,
 					ctChgDt: e.quantityChangeDate,
 					id: e.account_guid,
