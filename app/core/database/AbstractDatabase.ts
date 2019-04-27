@@ -7,7 +7,7 @@ export abstract class AbstractDatabase {
 		this.dbCredentials = _dbCredentials;
 	}
 
-	protected abstract createConnection();
 	public abstract query(queryString: string);
 	public abstract storedProc(storedProc: string);
+	protected abstract createConnection();
 }

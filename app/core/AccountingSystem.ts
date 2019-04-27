@@ -25,4 +25,8 @@ export abstract class AccountingSystem {
 	protected getAccounts() {
 		return this.bridge.accounts();
 	}
+
+	protected getStocks() {
+		return this.bridge.stocks();
+	}
 }

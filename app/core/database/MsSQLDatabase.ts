@@ -4,7 +4,7 @@ export class MsSQLDatabase extends AbstractDatabase {
 
 	public query(queryString: string): Promise<object> {
 		return new Promise((resolve, reject) => {
-			resolve([])
+			resolve([]);
 		});
 	}
 
