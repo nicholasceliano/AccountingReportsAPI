@@ -8,6 +8,7 @@ require('./logger');
 
 const app = express();
 const logger = loggers.get('logger');
+require('./extensions/StringExt');
 require('./appMiddleware')(app, logger);
 
 app.use(`/${config().apiVersion}/account`, require('./routes/api/account'));

@@ -1,0 +1,3 @@
+interface APIValidator {
+	validate(): boolean;
+}

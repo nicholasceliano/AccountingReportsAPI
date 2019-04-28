@@ -3,5 +3,5 @@ import { Stock } from '../models/stock';
 
 export interface AccountSystemBridge {
 	accounts(): Promise<Account[]>;
-	stocks(): Promise<Stock[]>;
+	stocks(id: string, historyMonths?: number): Promise<Stock[]>;
 }

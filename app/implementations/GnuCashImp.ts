@@ -32,8 +32,11 @@ export class GnuCashImp extends AccountingSystemDatabase implements AccountSyste
 		});
 	}
 
-	public stocks(): Promise<Stock[]> {
-		return this.promiseHandler<Stock[]>(this.db.storedProc(`getStockValuesOvertime(null, null)`), (res) => {
+	public stocks(id: string, historyMonths: number): Promise<Stock[]> {
+		const idParam = id ? '\'' + id + '\'' : null;
+		const historyMonthsParam = isNaN(historyMonths) ? null : historyMonths;
+
+		return this.promiseHandler<Stock[]>(this.db.storedProc(`getStockValuesOvertime(${idParam},${historyMonthsParam})`), (res) => {
 			const array: Stock[] = [];
 
 			res[0].forEach((e) => {
