@@ -1,4 +1,5 @@
 export class StockValidator implements APIValidator {
+	public errorMessage: string = 'Invalid query parameters: type(required), id, historyType, historyMonths';
 
 	constructor(private type: string, private id: string, private historyType: string, private historyMonths: any) {}
 

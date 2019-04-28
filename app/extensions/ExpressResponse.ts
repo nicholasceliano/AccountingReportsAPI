@@ -3,7 +3,7 @@ import { isArray } from 'util';
 declare global {
 	namespace Express {
 		interface Response {
-			sendAPIResponse(promise: Promise<object>);
+			sendAPIResponse(promise: Promise<object>, validator?: APIValidator);
 			APIError(code: number, message: string);
 		}
 	}
@@ -15,15 +15,19 @@ export class ExpressResponse {
 			res.status(code).send({ error: message });
 		};
 
-		res.sendAPIResponse = (promise: Promise<object>) => {
-			promise.then((obj) => {
-				res.send({
-					data: obj,
-					results: isArray(obj) ? obj.length : 1,
+		res.sendAPIResponse = (promise: Promise<object>, validator?: APIValidator) => {
+			if (validator === undefined ? true : validator.validate()) {
+				promise.then((obj) => {
+					res.send({
+						data: obj,
+						results: isArray(obj) ? obj.length : 1,
+					});
+				}).catch((err) => {
+					res.APIError(500, err);
 				});
-			}).catch((err) => {
-				res.APIError(500, err);
-			});
+			} else {
+				res.APIError(400, validator === undefined ? 'Bad Request' : validator.errorMessage);
+			}
 		};
 	}
 }

@@ -13,12 +13,9 @@ router.get('/', (req, res) => {
 	const id = String.convertToLowerCase(req.query.id);
 	const historyType = String.convertToLowerCase(req.query.historyType);
 	const historyMonths = String.convertToNumber(req.query.historyMonths);
+	const validator = new StockValidator(type, id, historyType, historyMonths);
 
-	if (new StockValidator(type, id, historyType, historyMonths).validate()) {
-		res.sendAPIResponse(new Stocks(req.apiCredentails).list(type, id, historyType, historyMonths));
-	} else {
-		res.APIError(400, 'Invalid query parameters: type(required), id, historyType, historyMonths');
-	}
+	res.sendAPIResponse(new Stocks(req.apiCredentails).list(type, id, historyType, historyMonths), validator);
 });
 
 module.exports = router;
