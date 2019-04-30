@@ -29,4 +29,8 @@ export abstract class AccountingSystem {
 	protected getStocks(id: string, historyMonths?: number) {
 		return this.bridge.stocks(id, historyMonths);
 	}
+
+	protected getTransactions(accountId: string) {
+		return this.bridge.transactions(accountId);
+	}
 }

@@ -3,6 +3,7 @@ import { MySQLDatabase } from '../core/database/MySQLDatabase';
 import { Account } from '../models/account';
 import { AccountingSystemDatabase } from '../core/AccountingSystemDatabase';
 import { Stock } from '../models/stock';
+import { Transaction } from '../models/transaction';
 
 export class GnuCashImp extends AccountingSystemDatabase implements AccountSystemBridge {
 	private db: MySQLDatabase;
@@ -52,6 +53,25 @@ export class GnuCashImp extends AccountingSystemDatabase implements AccountSyste
 					price: e.price,
 					priceDt: e.priceDate,
 				} as Stock);
+			});
+
+			return array;
+		});
+	}
+
+	public transactions(accountId: string): Promise<Transaction[]> {
+		return this.promiseHandler<Transaction[]>(this.db.storedProc(`getTransactionsByAccountId('${accountId}')`), (res) => {
+			const array: Transaction[] = [];
+			res[0].forEach((e) => {
+				array.push({
+					accountType: e.account_type,
+					desc: e.description,
+					enterDate: e.enter_date,
+					id: e.transaction_id,
+					postDate: e.post_date,
+					quantity: e.transaction_quantity,
+					value: e.transaction_value,
+				} as Transaction);
 			});
 
 			return array;
