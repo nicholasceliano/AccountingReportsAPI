@@ -24,7 +24,10 @@ export class GnuCashImp extends AccountingSystemDatabase implements AccountSyste
 					currencyId: e.currency_guid,
 					currencyName: e.currency_name,
 					date: e.value_date,
-					value: (e.account_currency * e.currency_value),
+					parentId: e.account_parent_guid,
+					parentName: e.account_parent_name,
+					parentRoot: (e.root_account === 1 ? true : false),
+					value: (e.account_quantity * e.currency_value),
 				} as Account);
 			});
 

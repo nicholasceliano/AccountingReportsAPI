@@ -6,4 +6,7 @@ export type Account = {
 	accountId: string;
 	accountName: string;
 	accountType: string;
+	parentId: string;
+	parentName: string;
+	parentRoot: boolean;
 };
