@@ -24,15 +24,58 @@ export class GnuCashImp extends AccountingSystemDatabase implements AccountSyste
 					accountType: e.account_type,
 					currencyId: e.currency_guid,
 					currencyName: e.currency_name,
+					currencyType: e.currency_type,
 					date: e.value_date,
+					desc: e.description,
+					isPlaceholder: (e.placeholder === 1 ? true : false),
+					isStock: (e.account_type === 'STOCK' ? true : false),
+					lastPrice: 0,
 					parentId: e.account_parent_guid,
 					parentName: e.account_parent_name,
 					parentRoot: (e.root_account === 1 ? true : false),
+					transCt: 0,
+					transCtMo: 0,
+					transCtWk: 0,
+					transCtYr: 0,
+					valChangeMo: 0,
+					valChangeWk: 0,
+					valChangeYr: 0,
 					value: (e.account_quantity * e.currency_value),
 				} as Account);
 			});
 
 			return array;
+		});
+	}
+
+	public account(accountId: string): Promise<Account> {
+		return this.promiseHandler<Account>(this.db.storedProc(`getAccount('${accountId}')`), (res) => {
+			const dataRow = res[0][0];
+
+			return {
+				accountId: dataRow.account_id,
+				accountName: dataRow.name,
+				accountType: dataRow.account_type,
+				currencyId: dataRow.currency_guid,
+				currencyName: dataRow.currency_name,
+				currencyType: dataRow.currency_type,
+				desc: dataRow.description,
+				isPlaceholder: (dataRow.placeholder === 1 ? true : false),
+				isStock: (dataRow.account_type === 'STOCK' ? true : false),
+				lastPrice: dataRow.last_price,
+				lastPriceDt: dataRow.last_price_date,
+				parentId: dataRow.account_parent_guid,
+				parentName: dataRow.account_parent_name,
+				parentRoot: (dataRow.root_account === 1 ? true : false),
+				transCt: dataRow.transaction_count,
+				transCtMo: dataRow.transactions_monthly,
+				transCtWk: dataRow.transactions_weekly,
+				transCtYr: dataRow.transactions_yearly,
+				valChangeMo: dataRow.val_change_monthly,
+				valChangeWk: dataRow.val_change_weekly,
+				valChangeYr: dataRow.val_change_yearly,
+				value: dataRow.current_value,
+			} as Account;
 		});
 	}
 

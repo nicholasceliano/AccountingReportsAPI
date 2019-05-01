@@ -4,6 +4,7 @@ import { Transaction } from '../models/transaction';
 
 export interface AccountSystemBridge {
 	accounts(): Promise<Account[]>;
+	account(accountId: string): Promise<Account>;
 	stocks(id: string, historyMonths?: number): Promise<Stock[]>;
 	transactions(accountId: string): Promise<Transaction[]>;
 }

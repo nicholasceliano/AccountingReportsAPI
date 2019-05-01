@@ -10,7 +10,7 @@ export class Accounts extends AccountingSystem {
 		return this.getAccounts();
 	}
 
-	public history() {
-		return this.getAccounts();
+	public get(id: string) {
+		return this.getAccounts(id);
 	}
 }

@@ -22,8 +22,12 @@ export abstract class AccountingSystem {
 		}
 	}
 
-	protected getAccounts() {
-		return this.bridge.accounts();
+	protected getAccounts(id?: string) {
+		if (id) {
+			return this.bridge.account(id);
+		} else {
+			return this.bridge.accounts();
+		}
 	}
 
 	protected getStocks(id: string, historyMonths?: number) {
